@@ -44,7 +44,7 @@ export function FormContact() {
             <div className="mb-3">
               <label htmlFor="contactEmail" className="form-label">Email</label>
               <Field type="email" className="form-control" name="email" id="contactEmail"/>
-              <ErrorMessage name="email" component="span" className="form-err"></ErrorMessage>
+              <ErrorMessage sage name="email" component="span" className="form-err"></ErrorMessage>
             </div>
             <div className="mb-3">
               <label htmlFor="contactPhone" className="form-label">Phone</label>
