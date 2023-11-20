@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import 'bootstrap/dist/css/bootstrap.css';
 export function BookManager(){
@@ -8,14 +7,37 @@ export function BookManager(){
         title: "",
         quantity: 1,
     };
+    const [books,setBooks]=useState([]);
+    const[selectBook , setSelectBook]=useState(null);
+    useEffect(()=>{
+        setBooks([
+            {
+                title:"ThanhBui",
+                quantity:1
+            },
+            {
+                title:"VyKim",
+                quantity:2
+            },
+            {
+                title:"ChauBui",
+                quantity:3
+            }
+        ])
+    },[]);
     const bookValidation = {
         title: Yup.string()
                .required("Require") ,
         quantity: Yup.number()
                 .required("Require"),
     };
-    const handleSubmit = () =>{
-        
+    const handleDelete=(title)=>{
+        const deleteBook=books.filter((book)=>book.title!==title);
+        setBooks(deleteBook);
+    }
+    const handleUpdate=(title)=>{
+        const updateBook=books.find((book)=>book.title!=title);
+        setSelectBook(updateBook);
     }
     return(
         <>
@@ -50,10 +72,22 @@ export function BookManager(){
                 </thead>
                 <tbody>
                     {
-                        this
+                        books.map((values, index) =>{
+                            return(
+                                <tr key={index}>
+                                    <td>{values.title}</td>
+                                    <td>{values.quantity}</td>
+                                    <td><button type="button" onClick={(e)=>handleUpdate(values.title)}>Edit</button></td>
+                                    <td><button type="button" onClick={(e)=>handleDelete(values.title)}>Delete</button></td>
+                                </tr>
+                            )
+                        })
                     }
                 </tbody>
             </table>
+            {
+                selectBook 
+            }
         </div>
         </Formik>
         </>
